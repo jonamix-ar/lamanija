@@ -58,10 +58,7 @@ export default async function EventPage({ params }: EventPageProps) {
     }
 
     return (
-        <PageLayout
-            title={event.title}
-            description={event.short_description || `Detalles del evento ${event.title}`}
-        >
+        <PageLayout>
             <EventDetail event={event} />
         </PageLayout>
     );
