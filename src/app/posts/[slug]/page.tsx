@@ -2,7 +2,8 @@ import { postsApi } from '@/lib/api';
 import { PageLayout } from '@/components/layout/page-layout';
 import PostDetail from '@/components/posts/post-detail';
 import { notFound } from 'next/navigation';
-import { Metadata } from 'next';
+import type { Metadata } from 'next';
+import type { Post } from '@/types';
 
 interface PostPageProps {
     params: Promise<{
@@ -49,7 +50,7 @@ export default async function PostPage({ params }: PostPageProps) {
         notFound();
     }
 
-    let post;
+    let post: Post;
 
     try {
         post = await postsApi.getBySlug(slug);

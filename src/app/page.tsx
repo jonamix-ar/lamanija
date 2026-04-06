@@ -26,7 +26,7 @@ const defaultOrder = 'hero,featured_posts,events,section_showcase,products,djs,b
 
 export default function Home() {
     const settings = useSettingsContext();
-    const home = (settings as Record<string, Record<string, string>>)?.home;
+    const home = (settings as unknown as Record<string, Record<string, string>>)?.home;
     const orderStr = home?.home_sections_order || defaultOrder;
     const order = orderStr.split(',').map((s: string) => s.trim()).filter(Boolean);
 

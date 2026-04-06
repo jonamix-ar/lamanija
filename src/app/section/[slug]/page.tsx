@@ -3,12 +3,13 @@ import { PageLayout } from '@/components/layout/page-layout';
 import SectionHeader from '@/components/sections/section-header';
 import SectionContent from '@/components/sections/section-content';
 import { notFound } from 'next/navigation';
-import { Metadata } from 'next';
+import type { Metadata } from 'next';
+import type { Section } from '@/types';
 
 interface SectionPageProps {
-    params: {
+    params: Promise<{
         slug: string;
-    };
+    }>;
 }
 
 export async function generateMetadata({ params }: SectionPageProps): Promise<Metadata> {
@@ -30,7 +31,7 @@ export default async function SectionPage({ params }: SectionPageProps) {
     const { slug } = await params;
     if (!slug) notFound();
 
-    let section;
+    let section: Section;
     try {
         section = await sectionsApi.getBySlug(slug);
     } catch {

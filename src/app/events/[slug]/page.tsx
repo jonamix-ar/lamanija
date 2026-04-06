@@ -2,7 +2,8 @@ import { eventsApi } from '@/lib/api';
 import { PageLayout } from '@/components/layout/page-layout';
 import EventDetail from '@/components/events/event-detail';
 import { notFound } from 'next/navigation';
-import { Metadata } from 'next';
+import type { Metadata } from 'next';
+import type { Event as SiteEvent } from '@/types';
 
 interface EventPageProps {
     params: Promise<{
@@ -44,7 +45,7 @@ export default async function EventPage({ params }: EventPageProps) {
         notFound();
     }
 
-    let event;
+    let event: SiteEvent;
 
     try {
         event = await eventsApi.getBySlug(slug);
