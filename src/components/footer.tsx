@@ -7,6 +7,8 @@ import Image from "next/image";
 import InstagramIcon from "@/components/icons/instagram-icon";
 import FacebookIcon from "@/components/icons/facebook-icon";
 import XIcon from "@/components/icons/x-icon";
+import TiktokIcon from "@/components/icons/tiktok-icon";
+import YoutubeIcon from "@/components/icons/youtube-icon";
 
 export function Footer() {
     const { data: sections } = useSections();
@@ -15,6 +17,14 @@ export function Footer() {
     const menuSections = (sections || [])
         .filter(s => s.show_in_menu)
         .sort((a, b) => a.position - b.position);
+
+    const socialLinks = [
+        { url: settings.social.instagram_url, label: 'Instagram', Icon: InstagramIcon },
+        { url: settings.social.facebook_url, label: 'Facebook', Icon: FacebookIcon },
+        { url: settings.social.x_url, label: 'X (Twitter)', Icon: XIcon },
+        { url: settings.social.tiktok_url, label: 'TikTok', Icon: TiktokIcon },
+        { url: settings.social.youtube_url, label: 'YouTube', Icon: YoutubeIcon },
+    ].filter((s): s is { url: string; label: string; Icon: typeof InstagramIcon } => Boolean(s.url));
 
     return (
         <footer className="bg-card border-t border-border mt-16">
@@ -32,17 +42,22 @@ export function Footer() {
                         <p className="text-sm text-muted-foreground leading-relaxed">
                             {settings.branding.site_description || 'Publicidad y promoción para DJs, productores/as, y fiestas de música electrónica.'}
                         </p>
-                        <div className="flex items-center gap-3">
-                            <a href={settings.social.instagram_url || '#'} target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="text-muted-foreground hover:text-primary transition-colors">
-                                <InstagramIcon className="w-5 h-5" />
-                            </a>
-                            <a href={settings.social.facebook_url || '#'} target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="text-muted-foreground hover:text-primary transition-colors">
-                                <FacebookIcon className="w-5 h-5" />
-                            </a>
-                            <a href={settings.social.x_url || '#'} target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)" className="text-muted-foreground hover:text-primary transition-colors">
-                                <XIcon className="w-5 h-5" />
-                            </a>
-                        </div>
+                        {socialLinks.length > 0 && (
+                            <div className="flex items-center gap-3">
+                                {socialLinks.map(({ url, label, Icon }) => (
+                                    <a
+                                        key={label}
+                                        href={url}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        aria-label={label}
+                                        className="text-muted-foreground hover:text-primary transition-colors"
+                                    >
+                                        <Icon className="w-5 h-5" />
+                                    </a>
+                                ))}
+                            </div>
+                        )}
                     </div>
 
                     {/* Navegación */}
@@ -87,7 +102,7 @@ export function Footer() {
                 </div>
 
                 <div className="flex items-center justify-between pt-8 border-t border-border text-sm text-muted-foreground">
-                    <p>&copy; La Manija Official, 2025.</p>
+                     <p>© {new Date().getFullYear()} La Manija Official. Todos los derechos reservados.</p>
                 </div>
             </div>
         </footer>
