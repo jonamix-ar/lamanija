@@ -5,6 +5,8 @@ import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import type { Post } from '@/types';
 
+export const revalidate = 60;
+
 interface PostPageProps {
     params: Promise<{
         slug: string;

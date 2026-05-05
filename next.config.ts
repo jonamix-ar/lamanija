@@ -14,7 +14,13 @@ const nextConfig: NextConfig = {
         protocol: 'https',
         hostname: 'lamanijaofficial.com',
         port: '',
-        pathname: '/storage/upload/**',
+        pathname: '/storage/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'app.lamanijaofficial.com',
+        port: '',
+        pathname: '/storage/**',
       },
       {
         protocol: 'http',
