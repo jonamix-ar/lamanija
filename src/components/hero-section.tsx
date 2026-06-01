@@ -12,12 +12,17 @@ export function HeroSection() {
     const { data: sections } = useSections()
     const [currentSlide, setCurrentSlide] = useState(0)
 
-    // Extraer los posts más recientes de todas las secciones blog
-    const recentPosts: Post[] = (sections || [])
+    // Todos los posts publicados de secciones blog
+    const blogPosts: Post[] = (sections || [])
         .filter(s => s.type === 'blog' && s.posts && s.posts.length > 0)
         .flatMap(s => s.posts || [])
         .sort((a, b) => new Date(b.date_published).getTime() - new Date(a.date_published).getTime())
-        .slice(0, 3)
+
+    // Si hay posts marcados como destacados, usar esos; si no, fallback a los 3 más recientes
+    const featuredPosts = blogPosts.filter(p => p.featured)
+    const recentPosts: Post[] = featuredPosts.length > 0
+        ? featuredPosts.slice(0, 5)
+        : blogPosts.slice(0, 3)
 
     const hasSlides = recentPosts.length > 0
 

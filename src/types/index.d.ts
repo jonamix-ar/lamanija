@@ -43,6 +43,7 @@ export interface Post {
   image_type?: string
   video_url?: string
   status: string
+  featured?: boolean
   date_published: string
   tags?: string[]
   image_title?: string
@@ -132,6 +133,9 @@ export interface Event {
   ticket_url?: string
   status: 'draft' | 'published' | 'cancelled'
   featured: boolean
+  sold_out?: boolean
+  hide_time?: boolean
+  free_entry?: boolean
   section_id?: number
   created_at: string
   updated_at: string

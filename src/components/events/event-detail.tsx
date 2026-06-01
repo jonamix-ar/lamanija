@@ -27,12 +27,24 @@ function EventDetail({ event }: EventDetailProps) {
                 />
                 <div className="absolute inset-0 bg-linear-to-t from-background/80 to-transparent" />
 
-                {/* Featured badge */}
-                {event.featured && (
-                    <div className="absolute top-4 left-4 bg-primary text-primary-foreground px-3 py-1 rounded-lg text-xs font-bold uppercase tracking-wide">
-                        Destacado
-                    </div>
-                )}
+                {/* Badges superiores */}
+                <div className="absolute top-4 left-4 flex flex-wrap gap-2">
+                    {event.featured && (
+                        <div className="bg-primary text-primary-foreground px-3 py-1 rounded-lg text-xs font-bold uppercase tracking-wide">
+                            Destacado
+                        </div>
+                    )}
+                    {event.sold_out && (
+                        <div className="bg-destructive text-destructive-foreground px-3 py-1 rounded-lg text-xs font-bold uppercase tracking-wide">
+                            Agotado
+                        </div>
+                    )}
+                    {event.free_entry && !event.sold_out && (
+                        <div className="bg-accent text-accent-foreground px-3 py-1 rounded-lg text-xs font-bold uppercase tracking-wide">
+                            Entrada libre
+                        </div>
+                    )}
+                </div>
 
                 {/* Fecha grande sobre imagen */}
                 <div className="absolute bottom-4 left-4">
@@ -60,9 +72,11 @@ function EventDetail({ event }: EventDetailProps) {
                     </div>
                     <div>
                         <p className="text-sm font-medium text-foreground capitalize">{formattedDate}</p>
-                        <p className="text-xs text-muted-foreground flex items-center gap-1">
-                            <Clock className="w-3 h-3" /> {formattedTime}hs
-                        </p>
+                        {!event.hide_time && (
+                            <p className="text-xs text-muted-foreground flex items-center gap-1">
+                                <Clock className="w-3 h-3" /> {formattedTime}hs
+                            </p>
+                        )}
                     </div>
                 </div>
                 <div className="flex items-center gap-3">
@@ -79,12 +93,16 @@ function EventDetail({ event }: EventDetailProps) {
                         <Ticket className="w-5 h-5 text-primary" />
                     </div>
                     <div>
-                        {event.ticket_url ? (
+                        {event.sold_out ? (
+                            <p className="text-sm font-medium text-destructive">Agotado</p>
+                        ) : event.free_entry ? (
+                            <p className="text-sm font-medium text-accent">Entrada libre</p>
+                        ) : event.ticket_url ? (
                             <a href={event.ticket_url} target="_blank" rel="noopener noreferrer" className="text-sm font-medium text-primary hover:text-accent flex items-center gap-1">
                                 Comprar entrada <ExternalLink className="w-3 h-3" />
                             </a>
                         ) : (
-                            <p className="text-sm text-muted-foreground">Entrada libre</p>
+                            <p className="text-sm text-muted-foreground">Sin información de tickets</p>
                         )}
                     </div>
                 </div>

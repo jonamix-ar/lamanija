@@ -44,8 +44,8 @@ export function PostCard({ post }: PostCardProps) {
                     )}
                 </div>
 
-                {/* Título grande en dorado */}
-                <h3 className="text-2xl sm:text-3xl md:text-4xl font-extrabold leading-none text-primary group-hover:text-accent transition-colors">
+                {/* Título en dorado — limitado a 3 líneas para no tapar la imagen */}
+                <h3 className="text-lg sm:text-xl md:text-2xl font-extrabold leading-tight text-primary group-hover:text-accent transition-colors line-clamp-3">
                     {post.title}
                 </h3>
 

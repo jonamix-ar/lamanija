@@ -99,23 +99,30 @@ export function UpcomingEvents({ hideHeader = false, limit }: { hideHeader?: boo
                             </div>
 
                             <div className="absolute inset-0 p-4 flex flex-col justify-between text-foreground">
-                                {/* Botón de ticket en la esquina superior izquierda con tu estilo original */}
+                                {/* Botón de ticket en la esquina superior izquierda */}
                                 <div className="flex justify-between items-start">
-                                    {event.has_tickets ? (
+                                    {event.sold_out ? (
+                                        <span
+                                            className="absolute top-5 left-5 min-w-[130px] h-10 rounded-xl bg-destructive inline-flex flex-row justify-center items-center text-destructive-foreground text-sm z-2 font-medium px-[15px] border border-destructive/30 pointer-events-none"
+                                        >
+                                            <Ticket className="w-4 h-4 mr-2" />
+                                            Agotado
+                                        </span>
+                                    ) : event.free_entry ? (
+                                        <span
+                                            className="absolute top-5 left-5 min-w-[130px] h-10 rounded-xl bg-accent inline-flex flex-row justify-center items-center text-accent-foreground text-sm z-2 font-medium px-[15px] border border-accent/20 pointer-events-none"
+                                        >
+                                            <Ticket className="w-4 h-4 mr-2" />
+                                            Entrada libre
+                                        </span>
+                                    ) : event.has_tickets || event.ticket_url ? (
                                         <span
                                             className="absolute top-5 left-5 min-w-[130px] h-10 rounded-xl bg-primary inline-flex flex-row justify-center items-center text-primary-foreground text-sm z-2 font-medium px-[15px] border border-primary/20 pointer-events-none"
                                         >
                                             <Ticket className="w-4 h-4 mr-2" />
                                             Comprar entrada
                                         </span>
-                                    ) : (
-                                        <span
-                                            className="absolute top-5 left-5 min-w-[130px] h-10 rounded-xl bg-secondary inline-flex flex-row justify-center items-center text-secondary-foreground text-sm z-2 font-medium px-[15px] border border-border pointer-events-none"
-                                        >
-                                            <Ticket className="w-4 h-4 mr-2" />
-                                            Agotado
-                                        </span>
-                                    )}
+                                    ) : null}
 
                                     {/* Badge destacado en la esquina superior derecha */}
                                     {event.featured && (
@@ -133,10 +140,12 @@ export function UpcomingEvents({ hideHeader = false, limit }: { hideHeader?: boo
                                         <Calendar className="w-4 h-4 mr-2" />
                                         {eventDateTime.date}
                                     </div>
-                                    <div className="text-sm text-muted-foreground flex items-center">
-                                        <Clock className="w-4 h-4 mr-2" />
-                                        {eventDateTime.time}
-                                    </div>
+                                    {!event.hide_time && (
+                                        <div className="text-sm text-muted-foreground flex items-center">
+                                            <Clock className="w-4 h-4 mr-2" />
+                                            {eventDateTime.time}
+                                        </div>
+                                    )}
 
                                     {/* Título del evento */}
                                     <h4 className="text-xl font-bold group-hover:text-primary transition-colors">
